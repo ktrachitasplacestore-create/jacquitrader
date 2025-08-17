@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jacqueline Rovelo - Trader y Madre</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://placehold.co/32x32/0a0a0a/D4AF37?text=JR" type="image/png">
+
+    <style>
+        /* Estilo personalizado para la fuente y la nueva paleta de colores */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000; /* Fondo negro puro */
+            color: #e5e7eb; /* gris-200 */
+        }
+        /* Paleta de colores dorados */
+        .bg-gold { background-color: #D4AF37; }
+        .hover-bg-gold-dark:hover { background-color: #B8860B; }
+        .text-gold { color: #D4AF37; }
+        .hover-text-gold-light:hover { color: #FFD700; }
+        .border-gold { border-color: #D4AF37; }
+        .shadow-gold { box-shadow: 0 10px 15px -3px rgba(212, 175, 55, 0.1), 0 4px 6px -2px rgba(212, 175, 55, 0.05); }
+        .shadow-gold-lg { box-shadow: 0 0 30px 0px rgba(212, 175, 55, 0.25); }
+
+        /* Efecto de "reveal" en scroll para las secciones */
+        .reveal {
+            position: relative;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 1s ease;
+        }
+        .reveal.active {
+            transform: translateY(0px);
+            opacity: 1;
+        }
+
+        /* Estilo para el canvas del gráfico */
+        #hero-graph {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.2; /* Sutil para no distraer */
+        }
+
+        /* Estilos para las tarjetas con efecto de giro (flip) */
+        .card-container {
+            perspective: 1000px;
+        }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        .card-container:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+            border-radius: 0.5rem; /* 8px */
+        }
+        .card-back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- ========== HEADER & HERO SECTION ========== -->
+    <header class="relative min-h-screen w-full flex flex-col overflow-hidden">
+        <div class="absolute inset-0 bg-black bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(212,175,55,0.15),rgba(0,0,0,0))]"></div>
+        <canvas id="hero-graph"></canvas>
+        
+        <nav class="absolute top-0 left-0 right-0 z-20 p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold text-white">Jacqueline Rovelo</a>
+                <div class="hidden md:flex space-x-8 text-gray-300">
+                    <a href="#about" class="hover-text-gold-light transition duration-300">Sobre Mí</a>
+                    <a href="#markets" class="hover-text-gold-light transition duration-300">Mercados</a>
+                    <a href="#plan" class="hover-text-gold-light transition duration-300">El Plan Anual</a>
+                    <a href="#contact" class="hover-text-gold-light transition duration-300">Contacto</a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="flex-grow flex items-center relative z-10">
+            <div class="container mx-auto px-6 text-center md:text-left">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="flex flex-col items-center md:items-start">
+                        <!-- Título con tamaño ajustado -->
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-4">
+                            Conquista tu <span class="text-gold">libertad financiera</span> sin sacrificar tu maternidad.
+                        </h1>
+                        <p class="text-base md:text-lg text-gray-400 max-w-xl mb-8">
+                            Descubre cómo el trading me permitió dejar el horario de oficina para generar ingresos diarios y, lo más importante, vivir cada momento de la crianza de mis hijas.
+                        </p>
+                        <a href="https://walink.co/9bd48a" target="_blank" class="bg-gold hover-bg-gold-dark text-black font-bold py-3 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105 shadow-gold">
+                            Inicia Tu Transformación
+                        </a>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="w-80 h-80 md:w-96 md:h-96 lg:w-[450px] lg:h-[450px] rounded-full overflow-hidden border-4 border-gold/50 shadow-gold-lg">
+                            <img src="https://res.cloudinary.com/dufxtzcpl/image/upload/v1755388763/jacqui_2_owucsw.webp" 
+                                 alt="Retrato de Jacqueline Rovelo" 
+                                 class="w-full h-full object-cover"
+                                 onerror="this.onerror=null;this.src='https://placehold.co/600x600/000000/e5e7eb?text=Error';">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </header>
+
+    <!-- ========== SECCIÓN SOBRE MÍ ========== -->
+    <section id="about" class="py-20 md:py-32 bg-gradient-to-b from-black to-[#0a0903] reveal">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+                <div class="rounded-lg overflow-hidden shadow-xl order-2 md:order-1">
+                     <img src="https://res.cloudinary.com/dufxtzcpl/image/upload/v1755389887/jacqui_4_db776s.webp" 
+                          alt="Jacqueline como madre y trader" 
+                          class="w-full h-full object-cover"
+                          onerror="this.onerror=null;this.src='https://placehold.co/600x700/0a0a0a/e5e7eb?text=Error';">
+                </div>
+                <div class="order-1 md:order-2">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">De un horario fijo a la libertad de <span class="text-gold">ser mamá y trader.</span></h2>
+                    <p class="text-gray-300 mb-4">
+                        Durante años, creí que el éxito profesional significaba sacrificar tiempo valioso. La idea de perderme los primeros pasos, las primeras palabras y los festivales escolares de mis niñas por estar en una oficina 8 horas al día, simplemente no era una opción para mí.
+                    </p>
+                    <p class="text-gray-300 mb-6">
+                        El trading no solo se convirtió en mi fuente de ingresos, sino en mi vehículo hacia la libertad. Aprendí a generar en pocas horas lo que antes me tomaba una semana, permitiéndome ser una madre presente, dueña de mi tiempo y arquitecta de mi propio futuro financiero. Ahora, mi misión es enseñarte a ti cómo lograrlo también.
+                    </p>
+                    <a href="https://walink.co/9bd48a" target="_blank" class="text-gold font-semibold hover-text-gold-light transition duration-300">
+                        Hablemos de tu futuro →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECCIÓN MERCADOS DE INVERSIÓN ========== -->
+    <section id="markets" class="py-20 md:py-32 bg-gradient-to-b from-[#0a0903] to-black reveal">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Un Universo de Oportunidades Financieras</h2>
+                <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Te guiaré a través de los mercados con mayor potencial para que encuentres el que mejor se adapta a tu estilo de vida.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Tarjeta 1: Forex -->
+                <div class="card-container h-52">
+                    <div class="card-inner">
+                        <div class="card-front bg-gray-900/50 p-6 flex flex-col justify-center items-center border border-gray-800">
+                            <svg class="w-16 h-16 text-gold mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182.553-.44 1.278-.659 2.003-.659c.768 0 1.536.219 2.121.659L15 9.182" /></svg>
+                            <h3 class="text-2xl font-bold text-white">Forex</h3>
+                        </div>
+                        <div class="card-back bg-gray-800 p-6 flex items-center justify-center border border-gold">
+                            <p class="text-gray-300 text-center">El mercado de divisas, el más grande y líquido del mundo. Opera con la fortaleza de las economías globales.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta 2: Índices Sintéticos -->
+                <div class="card-container h-52">
+                    <div class="card-inner">
+                        <div class="card-front bg-gray-900/50 p-6 flex flex-col justify-center items-center border border-gray-800">
+                            <svg class="w-16 h-16 text-gold mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" /></svg>
+                            <h3 class="text-2xl font-bold text-white">Índices Sintéticos</h3>
+                        </div>
+                        <div class="card-back bg-gray-800 p-6 flex items-center justify-center border border-gold">
+                            <p class="text-gray-300 text-center">Mercados únicos que simulan la volatilidad del mundo real, disponibles 24/7 y libres de manipulación.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta 3: Criptomonedas -->
+                <div class="card-container h-52">
+                    <div class="card-inner">
+                        <div class="card-front bg-gray-900/50 p-6 flex flex-col justify-center items-center border border-gray-800">
+                            <svg class="w-16 h-16 text-gold mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.25 7.756a4.5 4.5 0 1 0 0 8.488M7.5 10.5h5.25m-5.25 3h5.25M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                            <h3 class="text-2xl font-bold text-white">Criptomonedas</h3>
+                        </div>
+                        <div class="card-back bg-gray-800 p-6 flex items-center justify-center border border-gold">
+                           <p class="text-gray-300 text-center">La nueva era de las finanzas. Invierte en la revolución digital y aprovecha la alta volatilidad.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta 4: Opciones Binarias -->
+                <div class="card-container h-52">
+                    <div class="card-inner">
+                        <div class="card-front bg-gray-900/50 p-6 flex flex-col justify-center items-center border border-gray-800">
+                            <svg class="w-16 h-16 text-gold mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" /></svg>
+                            <h3 class="text-2xl font-bold text-white">Opciones Binarias</h3>
+                        </div>
+                        <div class="card-back bg-gray-800 p-6 flex items-center justify-center border border-gold">
+                            <p class="text-gray-300 text-center">Operaciones rápidas basadas en la predicción de la dirección del precio. Ideal para resultados a corto plazo.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta 5: Materias Primas -->
+                <div class="card-container h-52">
+                    <div class="card-inner">
+                        <div class="card-front bg-gray-900/50 p-6 flex flex-col justify-center items-center border border-gray-800">
+                            <svg class="w-16 h-16 text-gold mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375" /></svg>
+                            <h3 class="text-2xl font-bold text-white">Materias Primas</h3>
+                        </div>
+                        <div class="card-back bg-gray-800 p-6 flex items-center justify-center border border-gold">
+                            <p class="text-gray-300 text-center">Invierte en activos tangibles como el oro, el petróleo y la plata. Un refugio seguro en tiempos de incertidumbre.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta 6: Acciones -->
+                <div class="card-container h-52">
+                    <div class="card-inner">
+                        <div class="card-front bg-gray-900/50 p-6 flex flex-col justify-center items-center border border-gray-800">
+                            <svg class="w-16 h-16 text-gold mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21v-4.5m0 4.5h16.5M3.75 21H6.75m0 0h3.75m-3.75 0H3.75m0 0h16.5m-16.5 0H6.75m0 0v-4.5m0 4.5h3.75m-3.75 0v-4.5m0 4.5h16.5m-16.5 0H6.75m6-12v-4.5m0 4.5h3.75m-3.75 0H9.75m0 0v-4.5m0 4.5h3.75m0 0H9.75m6 0v-4.5m0 4.5h3.75m-3.75 0H15.75m0 0v-4.5m0 4.5h3.75M9.75 9v-4.5m0 4.5h3.75m-3.75 0H9.75" /></svg>
+                            <h3 class="text-2xl font-bold text-white">Acciones</h3>
+                        </div>
+                        <div class="card-back bg-gray-800 p-6 flex items-center justify-center border border-gold">
+                            <p class="text-gray-300 text-center">Sé dueña de una parte de las empresas más grandes del mundo y crece junto a ellas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECCIÓN PLAN ANUAL ========== -->
+    <section id="plan" class="py-20 md:py-32 bg-gradient-to-b from-black to-[#0a0903] reveal">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+                <div>
+                    <span class="text-gold font-semibold">TU TRANSFORMACIÓN FINANCIERA</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mt-2 mb-6">El Plan de Estudio Anual: Tu Camino a la Rentabilidad</h2>
+                    <p class="text-gray-300 mb-8">
+                        Te invito a que te unas a un programa integral de un año que no solo te enseña a operar, sino que te transforma en una trader rentable. No se trata de señales, se trata de conocimiento real y duradero.
+                    </p>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-gold mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span><strong>Resultados Reales desde el Primer Mes:</strong> Aplica estrategias probadas y ve crecer tu cuenta desde las primeras semanas.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-gold mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span><strong>Acompañamiento Personalizado:</strong> No estarás sola. Te llevaré de la mano, resolviendo tus dudas y ajustando tu plan de trading.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-gold mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span><strong>Garantía de Éxito:</strong> Mi compromiso es total. Te acompaño hasta que logres el retorno de tu inversión inicial. Tu éxito es mi éxito.</span>
+                        </li>
+                    </ul>
+                    <a href="https://walink.co/9bd48a" target="_blank" class="mt-10 inline-block bg-gold hover-bg-gold-dark text-black font-bold py-3 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105 shadow-gold">
+                        Quiero Iniciar Mi Transformación
+                    </a>
+                </div>
+                <div class="rounded-lg overflow-hidden shadow-xl">
+                    <img src="https://res.cloudinary.com/dufxtzcpl/image/upload/v1755390542/jacqui_5_rq4y5v.webp" 
+                         alt="Plan de estudio de trading" 
+                         class="w-full h-full object-cover"
+                         onerror="this.onerror=null;this.src='https://placehold.co/600x700/0a0a0a/e5e7eb?text=Error';">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ========== FOOTER ========== -->
+    <footer id="contact" class="bg-black py-12 reveal">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold text-white">¿Lista para dar el primer paso?</h2>
+            <p class="text-gray-400 mt-3 mb-8 max-w-xl mx-auto">Contáctame para una sesión informativa gratuita y descubre si este camino es para ti.</p>
+            <a href="https://walink.co/9bd48a" target="_blank" class="bg-gold hover-bg-gold-dark text-black font-bold py-3 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105 shadow-gold">
+                Enviar un Mensaje
+            </a>
+            <div class="mt-10 flex justify-center space-x-6">
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/jacquelinemprende?igsh=aWJ6MTN4MW05d2Zo" target="_blank" class="text-gray-400 hover-text-gold-light transition duration-300">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.048-1.024-.06-1.378-.06-3.808s.012-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 016.345 2.525c.636-.247 1.363.416 2.427.465C9.793 2.013 10.147 2 12.315 2zm0 1.623c-2.372 0-2.686.009-3.637.053-.877.04-1.482.188-2.003.388a3.287 3.287 0 00-1.18 1.18c-.2.52-.348 1.126-.388 2.003-.044.951-.053 1.265-.053 3.637s.009 2.686.053 3.637c.04.877.188 1.482.388 2.003a3.287 3.287 0 001.18 1.18c.52.2 1.126.348 2.003.388.951.044 1.265.053 3.637.053s2.686-.009 3.637-.053c.877-.04 1.482-.188 2.003-.388a3.287 3.287 0 001.18-1.18c.2-.52.348 1.126-.388-2.003.044-.951.053-1.265.053-3.637s-.009-2.686-.053-3.637c-.04-.877-.188-1.482-.388-2.003a3.287 3.287 0 00-1.18-1.18c-.52-.2-1.126-.348-2.003-.388-.951-.044-1.265-.053-3.637-.053zM12 6.865a5.135 5.135 0 100 10.27 5.135 5.135 0 000-10.27zm0 1.623a3.512 3.512 0 110 7.024 3.512 3.512 0 010-7.024zM16.536 6.808a1.2 1.2 0 100 2.4 1.2 1.2 0 000-2.4z" clip-rule="evenodd" /></svg>
+                </a>
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/share/167pETkvGU/" target="_blank" class="text-gray-400 hover-text-gold-light transition duration-300">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+                </a>
+                <!-- TikTok -->
+                <a href="https://vm.tiktok.com/ZMARfPY7b/" target="_blank" class="text-gray-400 hover-text-gold-light transition duration-300">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-2.43.05-4.86-.95-6.69-2.81-1.75-1.76-2.84-4.14-2.82-6.58.02-2.65 1.17-5.19 3.07-6.94 1.89-1.74 4.41-2.8 6.96-2.81 1.33-.01 2.65.01 3.98.02Z"/></svg>
+                </a>
+            </div>
+            <p class="text-gray-500 text-sm mt-10">&copy; <span id="year"></span> Jacqueline Rovelo. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Script para el año actual en el footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Script para el efecto de "reveal" en scroll
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                } else {
+                    reveals[i].classList.remove('active');
+                }
+            }
+        }
+        window.addEventListener('scroll', reveal);
+        reveal();
+
+        // Script para el gráfico animado del Hero
+        const canvas = document.getElementById('hero-graph');
+        const ctx = canvas.getContext('2d');
+        let chartPoints = [];
+        let currentPoint = 0;
+        const totalPoints = 200;
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            generatePoints();
+        }
+
+        function generatePoints() {
+            chartPoints = [];
+            let y = canvas.height * 0.6;
+            for (let i = 0; i < totalPoints; i++) {
+                const x = (canvas.width / (totalPoints -1)) * i;
+                const randomFactor = (Math.random() - 0.5) * (canvas.height * 0.2);
+                y += randomFactor;
+                y = Math.max(canvas.height * 0.4, Math.min(canvas.height * 0.8, y));
+                chartPoints.push({ x, y });
+            }
+        }
+
+        function animateChart() {
+            if (currentPoint < totalPoints - 1) {
+                ctx.beginPath();
+                ctx.moveTo(chartPoints[currentPoint].x, chartPoints[currentPoint].y);
+                ctx.lineTo(chartPoints[currentPoint + 1].x, chartPoints[currentPoint + 1].y);
+                ctx.strokeStyle = '#D4AF37';
+                ctx.lineWidth = 2;
+                ctx.shadowColor = '#D4AF37';
+                ctx.shadowBlur = 10;
+                ctx.stroke();
+                currentPoint++;
+                requestAnimationFrame(animateChart);
+            }
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        
+        resizeCanvas();
+        animateChart();
+    </script>
+</body>
+</html>
